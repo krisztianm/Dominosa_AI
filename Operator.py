@@ -23,14 +23,14 @@ class Operator:
         return [a, b] in state.TILES and [b, a] in state.TILES and state.BOARD[i+1][j] == '-'
 
     def applyVertical(self, currentState, i, j):
-        newState = State()
+        newState = State(currentState.size, currentState.puzzle)
         newState.BOARD = deepcopy(currentState.BOARD) # ne módosuljon currentState.BOARD
         newState.TILES = deepcopy(currentState.TILES) # ne módosuljon currentState.TILES
         self.placeVertical(newState, i, j)
         return newState
 
     def applyHorizontal(self, currentState, i, j):
-        newState = State()
+        newState = State(currentState.size, currentState.puzzle)
         newState.BOARD = deepcopy(currentState.BOARD) # ne módosuljon currentState.BOARD
         newState.TILES = deepcopy(currentState.TILES) # ne módosuljon currentState.TILES
         self.placeHorizontal(newState, i, j)

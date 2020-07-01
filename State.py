@@ -1,15 +1,10 @@
-from UI import *
-
 class State:
-    def __init__(self):
-        self.size = 7#UI.lineEditSetSize.text()
-        self.GRID = self.generateGrid(self.size, '457143714462730512277567551503407626606503620164257511364234330322047011')
+    def __init__(self, size, puzzle):
+        self.size = size
+        self.puzzle = puzzle
+        self.GRID = self.generateGrid(self.size, self.puzzle)
         self.TILES = self.generateTiles(self.size)
-        self.BOARD = self.initialState()
-
-    def initialState(self):
-        state = self.generateGrid(self.size)
-        return state
+        self.BOARD = self.generateGrid(self.size)
 
     def isGoalState(self):
         return not any('-' in row for row in self.BOARD)
@@ -30,18 +25,10 @@ class State:
 
         return tiles
 
-    def appendTile(self, a, b):
-        self.TILES.append([a, b])
-        if a != b:
-            self.TILES.append([b, a])
-
     def popTile(self, a, b):
         self.TILES.pop(self.TILES.index([a, b]))
         if a != b:
             self.TILES.pop(self.TILES.index([b, a]))
-
-    def isItSame(self, a, b, c, d):  # két tile ugyanaz-e?
-        return ((a == c) and (b == d)) or ((a == d) and (b == c))
 
     def findNextFreeLocation(self):
         for i in range(self.size + 1):
