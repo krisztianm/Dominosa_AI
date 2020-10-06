@@ -6,7 +6,6 @@ class Backtracking:
             def __init__(self, state, parent, operator):
                 self.state = state
                 self.parent = parent
-                self.operator = operator
                 self.remainingOperators = ['horizontal', 'vertical']
 
         currentNode = Node(initialState, None, None)

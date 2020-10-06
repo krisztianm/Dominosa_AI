@@ -47,13 +47,17 @@ class UI:
         self.lineEditSetSize.setGeometry(QtCore.QRect(695, 565, 50, 25))
 
         self.buttonCreatePuzzle = QtWidgets.QPushButton(self.centralwidget)
-        self.buttonCreatePuzzle.setGeometry(QtCore.QRect(800, 565, 150, 25))
+        self.buttonCreatePuzzle.setGeometry(QtCore.QRect(760, 565, 140, 25))
         self.buttonCreatePuzzle.setText("Create Puzzle")
 
         self.buttonSolvePuzzle = QtWidgets.QPushButton(self.centralwidget)
-        self.buttonSolvePuzzle.setGeometry(QtCore.QRect(980, 565, 150, 25))
+        self.buttonSolvePuzzle.setGeometry(QtCore.QRect(920, 565, 140, 25))
         self.buttonSolvePuzzle.setText("Solve Puzzle")
         self.buttonSolvePuzzle.setDisabled(True)        # tiltva marad a gomb, amíg helyes inputot nem adunk
+
+        self.buttonSamplePuzzle = QtWidgets.QPushButton(self.centralwidget)
+        self.buttonSamplePuzzle.setGeometry(QtCore.QRect(1070, 565, 70, 25))
+        self.buttonSamplePuzzle.setText("Samples")
 
         self.buttonGetHelp = QtWidgets.QPushButton(self.centralwidget)
         self.buttonGetHelp.setGeometry(QtCore.QRect(1150, 565, 40, 25))
@@ -61,6 +65,7 @@ class UI:
 
         self.buttonCreatePuzzle.clicked.connect(self.fill)
         self.buttonSolvePuzzle.clicked.connect(self.solve)
+        self.buttonSamplePuzzle.clicked.connect(self.showSamples)
         self.buttonGetHelp.clicked.connect(self.popupGetHelp)
 
         MainWindow.setCentralWidget(self.centralwidget)
@@ -127,15 +132,19 @@ class UI:
                     if solution.BOARD[i][j] == 'L':  # balra tőle a párja, jobb oldali borderek lekerekítettek
                         self.label.setStyleSheet(
                             ".QLabel {border: 2px solid;border-top-right-radius: 15px;border-bottom-right-radius: 15px;background-color: red;}")
+                        #self.label.setText('L')
                     if solution.BOARD[i][j] == 'R':  # jobbre tőle a párja, bal oldali borderek lekerekítettek
                         self.label.setStyleSheet(
                             ".QLabel {border: 2px solid;border-top-left-radius: 15px;border-bottom-left-radius: 15px;background-color: red;}")
+                        #self.label.setText('R')
                     if solution.BOARD[i][j] == 'D':  # alatta a párja, felső borderek lekerekítettek
                         self.label.setStyleSheet(
                             ".QLabel {border: 2px solid;border-top-left-radius: 15px;border-top-right-radius: 15px;background-color: red;}")
+                        #self.label.setText('D')
                     if solution.BOARD[i][j] == 'U':  # felette a párja, alsó borderek lekerekítettek
                         self.label.setStyleSheet(
                             ".QLabel {border: 2px solid;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;background-color: red;}")
+                        #self.label.setText('U')
         else:
             self.popupNoSolution()
         self.frameSolution.show()
@@ -161,9 +170,31 @@ class UI:
     def popupGetHelp(self):
         msgbox = QMessageBox()
         msgbox.setWindowTitle("Help")
-        msgbox.setText("The application returns a solution (if there is any) for a\nvalid input combination.\n\nAn input combination is valid, when both input field\ncontains only digits (no input is invalid), and the length\nof the puzzle is equal to the following formula:\n\n\t PUZZLE = (SIZE+1) * (SIZE+2)\n\nWhen the inputs are correct, 'Create puzzle' button will\ncreate the puzzle, and the 'Solve puzzle' button will be\nenabled to find a solution (if there is any).")
+        msgbox.setText("The application returns a solution (if there is any) for a\nvalid input combination.\n\nAn input combination is valid, when both input field\ncontains only digits (no input is invalid), and the length\nof the puzzle is equal to the following formula:\n\n\t PUZZLE = (SIZE+1) * (SIZE+2)\n\nWhen the inputs are correct, 'Create puzzle' button will\ncreate the puzzle, and the 'Solve puzzle' button will be\nenabled to find a solution (if there is any).\n\nSample puzzles can be accessed after pressing\n'Samples' button.")
         msgbox.setStandardButtons(QMessageBox.Close)
         msgbox.setStyleSheet("QLabel{min-width: 300px;min-height: 400px;}")
+        msgbox.exec_()
+
+    def showSamples(self):
+        msgbox = QMessageBox()
+        msgbox.setWindowTitle("Samples")
+        msgbox.setStandardButtons(QMessageBox.Close)
+        msgbox.setStyleSheet("QLabel{min-width: 700px;min-height: 400px;}")
+        textLabel = QtWidgets.QLabel(msgbox)
+        textLabel.setText("You can copy any of the following puzzles and paste it into the 'Puzzle' input field on the main screen. Don't forget to specify the puzzle's size!")
+        textLabel.setGeometry(QtCore.QRect(10, 15, 10, 100))
+        textLabel.setAlignment(QtCore.Qt.AlignTop)
+        textBrowser = QtWidgets.QTextBrowser(msgbox)
+        textBrowser.setGeometry(QtCore.QRect(10, 40, 720, 370))
+        textBrowser.setText("Size 1: \n110100\n")
+        textBrowser.append("Size 2: \n222010211001\n")
+        textBrowser.append("Size 3: \n23011002310331222031\n")
+        textBrowser.append("Size 4: \n442143204010331203111403032422\n")
+        textBrowser.append("Size 5: \n101025242443314315500445450253021123520331\n")
+        textBrowser.append("Size 6: \n35066204314543061200436565613630252524212152634411400351\n")
+        textBrowser.append("Size 7: \n431117274256062207417300353423366632627151475007032575704163554512664401\n")
+        textBrowser.append("Size 8: \n553845366848211624483527800373771603261164752000338711558481222556047147314536402708662780\n")
+        textBrowser.append("Size 9: \n07143609705004420450893718599318316683156643579821761537966747296619342183447922062295230814803259547885518072\n")
         msgbox.exec_()
 
 
