@@ -1,15 +1,20 @@
 from Operator import *
 
+import Heuristic
+
 class Backtracking:
     def search(self, initialState):
         class Node:
             def __init__(self, state, parent, operator):
                 self.state = state
                 self.parent = parent
+                self.operator = operator
                 self.remainingOperators = ['horizontal', 'vertical']
 
         currentNode = Node(initialState, None, None)
         opr = Operator()
+
+        currentNode = Heuristic.Heuristic(currentNode, opr)
 
         row = currentNode.state.size + 1
         column = currentNode.state.size + 2
