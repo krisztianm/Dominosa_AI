@@ -1,6 +1,6 @@
 from Operator import *
 
-import Heuristic
+import Preprocess
 
 class Backtracking:
     def search(self, initialState):
@@ -14,7 +14,7 @@ class Backtracking:
         currentNode = Node(initialState, None, None)
         opr = Operator()
 
-        currentNode = Heuristic.Heuristic(currentNode, opr)
+        currentNode = Preprocess.Preprocess(currentNode, opr)
 
         row = currentNode.state.size + 1
         column = currentNode.state.size + 2
